@@ -1,40 +1,108 @@
 ﻿public static class Solution
 {
-    public static bool PalindromeNumber(int x)
+    public static int RomanToInt(string s)
     {
-        if (x < 0) return false;
-        var listInt = new List<int>();
+        int result = 0;
 
-
-        var result = x;
-        var temp = x;
-        while (temp > 0)
+        char prevC = '\0';
+        foreach (char c in s)
         {
-            result = temp % 10;
-            listInt.Add(result);
-            temp = temp / 10;
+            switch (c)
+            {
+                case 'I':
+                    result += 1;
+                    break;
+                case 'V':
+
+                    if (prevC == 'I')
+                    {
+                        result += 3;
+                    }
+                    else
+                    {
+                        result += 5;
+                    }
+                    break;
+                case 'X':
+                    if (prevC == 'I')
+                    {
+                        result += 8;
+                    }
+                    else
+                    {
+                        result += 10;
+                    }
+                    break;
+                case 'L':
+
+                    if (prevC == 'X')
+                    {
+                        result += 30;
+                    }
+                    else
+                    {
+                        result += 50;
+                    }
+                    break;
+                case 'C':
+                    if (prevC == 'X')
+                    {
+                        result += 80;
+                    }
+                    else
+                    {
+                        result += 100;
+                    }
+                    break;
+                case 'D':
+                    if (prevC == 'C')
+                    {
+                        result += 300;
+                    }
+                    else
+                    {
+                        result += 500;
+                    }
+
+                    break;
+                case 'M':
+                    if (prevC == 'C')
+                    {
+                        result += 800;
+                    }
+                    else
+                    {
+                        result += 1000;
+                    }
+
+                    break;
+            }
+            prevC = c;
         }
 
-        for (int i = 0; i < listInt.Count / 2; i++)
-        {
-            if (listInt[i] != listInt[listInt.Count - i - 1])
-                return false;
-        }
-        return true;
+        return result;
     }
-    public static bool PalindromeNumberChatGpt(int x)
+    public static int RomanToIntChatGPT(string s)
     {
-        if (x < 0) return false;
+        int result = 0;
 
-        if (x != 0 && x % 10 == 0) return false;
-
-        int reversedHalf = 0;
-        while (x > reversedHalf)
+        var romanDicnary = new Dictionary<char, int>()
         {
-            reversedHalf = reversedHalf * 10 + x % 10;
-            x /= 10;
+             { 'I', 1 },
+            { 'V', 5 },
+            { 'X', 10 },
+            { 'L', 50 },
+            { 'C', 100 },
+            { 'D', 500 },
+            { 'M', 1000 }
+        };
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (i > 0 && romanDicnary[s[i]] > romanDicnary[s[i - 1]])
+                result -= 2*romanDicnary[s[i - 1]];
+            result += romanDicnary[s[i]];
         }
-        return x == reversedHalf || x == reversedHalf / 10;
+        return result;
     }
 }
 
@@ -42,9 +110,9 @@ public class Program()
 {
     public static void Main(string[] args)
     {
-        var a = 1234321;
+        string s = "MCMXCIV";
 
-        Console.WriteLine(Solution.PalindromeNumber(a));
-        Console.WriteLine(Solution.PalindromeNumberChatGpt(a));
+
+        Console.WriteLine(Solution.RomanToIntChatGPT(s));
     }
 }
