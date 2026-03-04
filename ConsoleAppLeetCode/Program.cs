@@ -1,107 +1,24 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
-var a = new Solution();
-ListNode list1 = new ListNode(2, null);
-ListNode list2 = new ListNode(1, null);
-var list3 = a.MergeTwoLists(list1, list2);
+int[] nums = { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
+int k = new Solution().RemoveDuplicates(nums);
 
-Console.WriteLine("Done");
-public class ListNode
-{
-    public int val;
-    public ListNode next;
-    public ListNode(int val = 0, ListNode next = null)
-    {
-        this.val = val;
-        this.next = next;
-    }
-}
-
-//public class Solution
-//{
-//    public ListNode MergeTwoLists(ListNode list1, ListNode list2)
-//    {
-//        if (list1 == null)
-//        {
-//            return list2;
-//        }
-//        if (list2 == null)
-//        {
-//            return list1;
-//        }
-
-//        ListNode listSort = null;
-//        var p1 = list1;
-//        var p2 = list2;
-//        while (p1 != null || p2 != null)
-//        {
-//            if (p1 == null)
-//            {
-//                AddLast(head: ref listSort, p2.val);
-//                p2 = p2.next;
-//            }
-//            else if (p2 == null)
-//            {
-//                AddLast(head: ref listSort, p1.val);
-//                p1 = p1.next;
-//            }
-//            else if (p1.val < p2.val)
-//            {
-//                AddLast(head: ref listSort, p1.val);
-//                p1 = p1.next;
-//            }
-//            else
-//            {
-//                AddLast(head: ref listSort, p2.val);
-//                p2 = p2.next;
-//            }
-//        }
-//        return listSort;
-//    }
-//    public void AddLast(ref ListNode head, int value)
-//    {
-//        var newNode = new ListNode(value);
-
-//        if (head == null)
-//        {
-//            head = newNode;
-//            return;
-//        }
-
-//        var current = head;
-
-//        while (current.next != null)
-//        {
-//            current = current.next;
-//        }
-
-//        current.next = newNode;
-//    }
-//}
-//v2
+Console.WriteLine($"Result:{k}");
 public class Solution
 {
-    public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+    public int RemoveDuplicates(int[] nums)
     {
-        
-        ListNode dummy = new ListNode();
-        ListNode tail = dummy;
-        while (list1 != null && list2 != null)
+        int k = 1;
+        for (int i = 1; i < nums.Length; i++)
         {
-            if (list1.val < list2.val)
+            if (nums[i] != nums[k-1])
             {
-                tail.next = list1;
-                list1 = list1.next;
+                nums[k] = nums[i];
+                k++;
             }
-            else
-            {
-                tail.next = list2;
-                list2 = list2.next;
-            }
-            tail = tail.next;
         }
-        tail.next = list1 ?? list2;
-        return dummy.next;
+        return k;
     }
 }
+
