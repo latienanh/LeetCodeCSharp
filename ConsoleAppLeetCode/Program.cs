@@ -1,34 +1,42 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
+int[] nums = [1, 3];
+int target = 2;
 
-string haystack = "hello";
-string needle = "gg";
-int k = new Solution().StrStr(haystack, needle);
+int k = new Solution().SearchInsert(nums, target);
 
 Console.WriteLine($"Result:{k}");
 public class Solution
 {
-    public int StrStr(string haystack, string needle)
+    public int SearchInsert(int[] nums, int target)
     {
-        if (haystack.Length < needle.Length)
+
+        int left = 0;
+        int right = nums.Length - 1;
+
+        if (nums[left] > target)
+            return 0;
+        if (nums[right] < target)
         {
-            return -1;
+            return right + 1;
         }
 
-        for (int i = 0; i < haystack.Length; i++)
+        while (left <= right)
         {
-            if (haystack.Length - i < needle.Length)
+            int mid = left + (right-left) / 2;
+            if (nums[mid] == target)
             {
-                return -1;
+                return mid;
             }
-            var checkString = haystack.Substring(i, needle.Length);
-            if (checkString == needle)
+            else if (nums[mid] < target)
             {
-                return i;
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid - 1;
             }
         }
-
-        return -1;
+        return left;
     }
 }
-
