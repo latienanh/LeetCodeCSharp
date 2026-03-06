@@ -1,26 +1,34 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
-int[] nums = { 0, 1, 2, 2, 3, 0, 4, 2 };
-int k = new Solution().RemoveElement(nums, 2);
+string haystack = "hello";
+string needle = "gg";
+int k = new Solution().StrStr(haystack, needle);
 
 Console.WriteLine($"Result:{k}");
 public class Solution
 {
-    public int RemoveElement(int[] nums, int val)
+    public int StrStr(string haystack, string needle)
     {
-        int k = 0;
-        for (int i = 0; i < nums.Length; i++)
+        if (haystack.Length < needle.Length)
         {
-            if (nums[i] != val)
-            {
-                nums[k] = nums[i];
-                k++;
-            }
-            
+            return -1;
         }
 
-        return k;
+        for (int i = 0; i < haystack.Length; i++)
+        {
+            if (haystack.Length - i < needle.Length)
+            {
+                return -1;
+            }
+            var checkString = haystack.Substring(i, needle.Length);
+            if (checkString == needle)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
 
