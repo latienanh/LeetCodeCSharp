@@ -1,32 +1,22 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
-string s = "   fly me   to   the moon  ";
+int[] s = [1,9,9,9,9,9,9];
 
-int k = new Solution().LengthOfLastWord(s);
+int[] k = new Solution().PlusOne(s);
 
 Console.WriteLine($"Result:{k}");
 public class Solution
 {
-    public int LengthOfLastWord(string s)
+    public int[] PlusOne(int[] digits)
     {
-        int count = 0;
-
-        for (int i = s.Length - 1; i >= 0; i--)
+        int promise = 0;
+        for (int i = digits.Length - 1; i >= 0; i--)
         {
-            if (s[i] == ' ' && count == 0)
-            {
-                continue;
-            }
-            if (s[i] == ' ' && count > 0)
-            {
-                break;
-            }
+            promise = digits[i] + 1 % 2;
 
-            if (s[i] != ' ')
-            {
-                count++;
-            }
+            digits[i] = (digits[i] + 1 + promise) % 10;
+
         }
-        return count;
+        return digits;
     }
 }
